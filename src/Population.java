@@ -129,9 +129,9 @@ public class Population {
         Organism babyOrg = tempOrg.reproduce();
 
         // replace a random organism in the population with our baby Organism
-        //int randomIndex = randomizedArray(this.totalOrg)[0];
-        //this.popArray.set(randomIndex, babyOrg);
-        this.popArray.set(this.popArray.indexOf(smallestEnergyOrganism), babyOrg);
+        int randomIndex = randomizedArray(this.totalOrg)[0];
+        this.popArray.set(randomIndex, babyOrg);
+        //this.popArray.set(this.popArray.indexOf(smallestEnergyOrganism), babyOrg);
       }
 
       // check to see if they reproduce
@@ -174,11 +174,8 @@ public class Population {
 
 
     Pair<String, Integer>[] counts = (Pair<String, Integer>[]) new Pair[3];
-    // why it does not work when we use == to compare two strings
     for (int i = 0; i < this.popArray.size(); i++) {
-
       Organism tempOrg = this.popArray.get(i);
-
       if (tempOrg.getType().equals("Cooperator")) { 
         coopCount++;
       } 
@@ -189,21 +186,11 @@ public class Population {
         partCoopCount++;
       }
     }
-
+    
     counts[0] = new Pair<String, Integer>("Cooperator", coopCount);
     counts[1] = new Pair<String, Integer>("Defector", defecCount);
     counts[2] = new Pair<String, Integer>("PartialCooperator", partCoopCount);
-
-
-    // why does this give nullpointer exception error
-    /*
-     * counts[0].left = "Cooperator"; counts[0].right = coopCount;
-     * 
-     * counts[0].left = "Defector"; counts[0].right = defecCount;
-     * 
-     * counts[0].left = "PartialCooperator"; counts[0].right = partCoopCount;
-     */
-
+    
     return counts;
 
   }
