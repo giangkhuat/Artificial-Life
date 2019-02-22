@@ -1,7 +1,7 @@
 
 public class Pair<T,U> {
-	  T left;
-	  U right;
+	  public T left;
+	  public U right;
 
 	  public Pair(T left, U right) {
 	    this.left = left;
