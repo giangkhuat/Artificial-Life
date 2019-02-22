@@ -25,9 +25,7 @@ public class Population {
      */
     
     this.numberCoop = counts[0].right;
-    
     this.numberDefect = counts[1].right;
-    
     this.numberPartcoop = counts[2].right;
     
     this.totalOrg = this.numberCoop + this.numberDefect + this.numberPartcoop;
@@ -95,11 +93,16 @@ public class Population {
     // check to see if each organism will cooprate as describe
     // check if they reproduce
 
+    Organism smallestEnergyOrganism = this.popArray.get(0);
+    
     for (int i = 0; i < this.popArray.size(); i++) {
       // getting the organism at position i
       Organism tempOrg = this.popArray.get(i);
       // update by getting the organism at position i in the arrayList
       tempOrg.update();
+      if (tempOrg.energy < smallestEnergyOrganism.energy) {
+        smallestEnergyOrganism = tempOrg;
+      }
       // get the energy of each organism
       // if it can cooperate
       if (tempOrg.getCooperationProbability() == 1.0) {
@@ -118,7 +121,7 @@ public class Population {
           counter++;
         }
       }
-
+      // check if it reproduces
       if (tempOrg.energy >= 10) {
         // reduce energy
         tempOrg.energy = tempOrg.energy - 10;
@@ -126,9 +129,9 @@ public class Population {
         Organism babyOrg = tempOrg.reproduce();
 
         // replace a random organism in the population with our baby Organism
-        int randomIndex = randomizedArray(this.totalOrg)[0];
-        this.popArray.set(randomIndex, babyOrg);
-
+        //int randomIndex = randomizedArray(this.totalOrg)[0];
+        //this.popArray.set(randomIndex, babyOrg);
+        this.popArray.set(this.popArray.indexOf(smallestEnergyOrganism), babyOrg);
       }
 
       // check to see if they reproduce
@@ -176,18 +179,13 @@ public class Population {
 
       Organism tempOrg = this.popArray.get(i);
 
-      if (tempOrg.getType().equals("Cooperator")) {
-        
+      if (tempOrg.getType().equals("Cooperator")) { 
         coopCount++;
       } 
-      
-      else if (tempOrg.getType().equals("Defector")) {
-        
+      else if (tempOrg.getType().equals("Defector")) {  
         defecCount++;
       } 
-      
-      else if (tempOrg.getType().equals("PartialCooperator")) {
-        
+      else if (tempOrg.getType().equals("PartialCooperator")) { 
         partCoopCount++;
       }
     }
@@ -208,6 +206,12 @@ public class Population {
 
     return counts;
 
+  }
+  
+  public void printArray(ArrayList<Organism> popArray) {
+    int n = this.popArray.size();
+    for (int i = 0; i < n; ++i)
+      System.out.println("[" + i + " ] " + this.popArray.get(i).getType() + " " + this.popArray.get(i).energy);
   }
 
 }

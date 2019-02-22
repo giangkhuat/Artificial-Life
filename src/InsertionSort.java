@@ -35,10 +35,10 @@ public class InsertionSort {
   }
 
   /* A utility function to print array of size n */
-  public void printArray(ArrayList popArray[]) {
+  public void printArray(ArrayList<Organism> popArray) {
     int n = this.popArray.size();
     for (int i = 0; i < n; ++i)
-      System.out.println("[" + i + " ] " + this.popArray.get(i).getType());
+      System.out.println("[" + i + " ] " + this.popArray.get(i).getType() + " " + this.popArray.get(i).energy);
   }
 
   // Driver method
