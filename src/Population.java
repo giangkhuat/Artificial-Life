@@ -23,9 +23,13 @@ public class Population {
      * the first element of eac pair is the strinng second element is the object
      * 
      */
+    
     this.numberCoop = counts[0].right;
+    
     this.numberDefect = counts[1].right;
+    
     this.numberPartcoop = counts[2].right;
+    
     this.totalOrg = this.numberCoop + this.numberDefect + this.numberPartcoop;
     this.ticks = 0;
 
@@ -59,9 +63,11 @@ public class Population {
 
   }
 
-  public static ArrayList<Organism> sortPopulation(ArrayList<Organism> popArray) {
-
-  }
+  /*
+   * public static ArrayList<Organism> sortPopulation(ArrayList<Organism> popArray) {
+   * 
+   * }
+   */
 
   // method to shuffle an array of indices
   public static int[] randomizedArray(int length) {
@@ -171,10 +177,17 @@ public class Population {
       Organism tempOrg = this.popArray.get(i);
 
       if (tempOrg.getType().equals("Cooperator")) {
+        
         coopCount++;
-      } else if (tempOrg.getType().equals("Defector")) {
+      } 
+      
+      else if (tempOrg.getType().equals("Defector")) {
+        
         defecCount++;
-      } else if (tempOrg.getType().equals("PartialCooperator")) {
+      } 
+      
+      else if (tempOrg.getType().equals("PartialCooperator")) {
+        
         partCoopCount++;
       }
     }
