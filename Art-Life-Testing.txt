@@ -1,0 +1,200 @@
+TESTING for Artificial Life Assessment
+- Giang Khuat and Kabir Jain
+
+NOTE: All experiments were run for 100 updates.
+************
+POPULATION SIZE 10
+************
+1.a. 1 cooperator, 9 defectors
+
+>Prediction: 0 cooperators, 10 defectors. Defectors only have to replace 1
+cooperator. 1 Cooperator can't replace all defectors before getting
+replaced.
+
+>Result (same for all random seeds):
+Cooperators: 0
+Defectors: 10
+Partial Cooperators: 0
+Mean Cooperation Probability: 0.0
+
+>Results do support prediction.
+
+************
+POPULATION SIZE 100
+************
+1.b. 1 cooperator, 99 defectors
+
+>Prediction: 0 cooperators, 100 defectors. Defectors only have to replace 1
+cooperator. 1 Cooperator can't replace all defectors before getting
+replaced.
+
+>Result (same for all random seeds):
+Cooperators: 0
+Defectors: 100
+Partial Cooperators: 0
+Mean Cooperation Probability: 0.0
+
+> Results do support prediction.
+
+2.a. 9 cooperators, 1 defector.
+
+> Prediction: 10 cooperators, 0 defectors. Cooperators only have to replace
+  1 defector. 1 defector is unlikely to replace cooperators before being
+  wiped out.
+
+> Result (same for all random seeds):
+Cooperators: 10
+Defectors: 0
+Partial Cooperators: 0
+Mean Cooperation Probability: 1.0
+
+> Results do support prediction.
+
+2.b. 99 cooperators, 1 defector
+
+>Prediction: 100 cooperators, 0 defectors. Cooperators only have to replace
+ 1 defector. 1 defector is unlikely to replace coperators before being
+ wiped out.
+
+> Result (same for all random seeds):
+Cooperators: 100
+Defectors: 0
+Partial Cooperators: 0
+Mean Cooperation Probability: 1.0
+
+>Results do support prediction.
+
+3.a. 3 cooperators, 3 defectors, 3 partial cooperators
+
+>Prediction: Mostly defectors and/or partial cooperators will survive 100
+ updates. The reason cooperators will not survive is because they always
+ cooperate, which means they constantly reduce their own energy, and
+ therefore take a longer time to reach the threshold energy for
+ reproduction, and therefore reproduce (and replace other organisms) less.
+
+>Results:
+Seed1:
+Mean Cooperation Probability: 0.5
+
+Seed2:
+Mean Cooperation Probability: 0.5
+
+Seed3:
+Mean Cooperation Probability: 0.5
+
+Seed4:
+Mean Cooperation Probability: 0.11111
+
+Seed5:
+Mean Cooperation Probability: 0
+
+Seed6:
+Mean Cooperation Probability: 0.38888
+
+Seed7:
+Mean Cooperation Probability: 0.44444
+
+Seed8:
+Mean Cooperation Probability: 0.33333
+
+Seed9:
+Mean Cooperation Probability: 0.33333
+
+Seed10:
+Mean Cooperation Probability: 0.33333
+
+>Results support prediction. Mean Cooperation probabilities for most seeds
+ tend towards the lower half of 0.0 to 1.0.
+
+3.b. 33 Cooperators, 33 Defectors, 33 Partial Cooperators
+
+>Prediction: Same as prediction for 3.a.
+
+>Results:
+
+Seed1:
+Mean Cooperation Probability: 0.136363
+
+Seed2:
+Mean Cooperation Probability: 0.287878
+
+Seed3:
+Mean Cooperation Probability: 0.146464
+
+Seed4:
+Mean Cooperation Probability: 0.308080
+
+Seed5:
+Mean Cooperation Probability: 0.116161
+
+Seed6:
+Mean Cooperation Probability: 0.227272
+
+Seed7:
+Mean Cooperation Probability: 0.439393
+
+Seed8:
+Mean Cooperation Probability: 0.363636
+
+Seed9:
+Mean Cooperation Probability: 0.338383
+
+Seed10:
+Mean Cooperation Probability: 0.409090
+
+>Results support prediction. Mean cooperation probabilities for most seeds
+ tends towards the lower half of 0 - 1.0, which means that less cooperators
+ survived, compared to defectors and partial cooperators.
+
+--------------------------------------------------------------
+
+What does the success of Cooperators depend on?
+
+> In our program, we instituted the following ideas:
+
+a. Organisms CAN cooperate and reproduce in the same update, provided they
+have enough energy to do so.
+b. While being updated, organisms first receive the increment in their
+energy, then either cooperate or don't cooperate, then either reproduce or
+don't reproduce, in that particular order.
+
+> As a result of these ideas, Cooperators have a tougher time reaching the
+  energy threshold for reproducing, which is 10. For example, suppose we
+  have a Cooperator at energy level 9, and a Defector at energy level 9.
+  First, lets consider the cooperator. It receives an increment in energy,
+  which makes it energy equal to 10. Now it has the energy required to
+  reproduce. HOWEVER, it will first choose to cooperate, which means that
+  decrements the cooperator's energy, back to energy 9. For the defector,
+  it simply receives an increment in energy, doesn't cooperate, and then
+  reproduces. So, for cooperators to succeed in reaching the energy
+  threshold for reproduction, it depends on other Cooperators to lend it
+  energy through their cooperation. As a result, the survival and success
+  of cooperators is dependent on us initializing the population with a
+  reasonably high proportion of Cooperators.
+
+> If we change our idea (b), and instead of going
+  increment->cooperate?->reproduce?, we go
+  increment->reproduce?->cooperate?, we will likely see an increase in mean
+  cooperation probabilities as more cooperators will survive this way
+  because it makes it easier for them to reach the energy threshold of 10
+  energy.
+
+NOTE: Our current program does not include a check for cooperation when an
+organism's energy level is 0. That is, an organism with an energy level of
+0 should not be able to cooperate because we need to be able to decrement
+their energy when they cooperate, and we can't have an energy level below
+0. The reason our program does not include that check is because we go with
+the idea of increment->cooperate?->reproduce?, according to which, the
+increment in energy always happens before the cooperation check. As a
+result, the organism's energy level will never be 0 when we get to the
+cooperation check.
+
+HOWEVER, if we go with the idea increment->reproduce?->cooperate?, then we
+will need to implement that check in our update function. Let's consider an
+example to understand why: Suppose we have a Cooperator at energy level 9
+at the start of an update. We increment its energy, so its energy is now
+10. Then it reproduces, which decrements its energy by 10. Its energy level
+is now 0. Now comes the cooperation check. Cooperators always cooperate,
+BUT this particular cooperator has an energy level of 0 and therefore we
+should not allow it to cooperate in that iteration. As a result, we would need this check if
+we implemented this alternative procedure. 
