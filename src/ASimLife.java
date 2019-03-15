@@ -29,7 +29,8 @@ public class ASimLife {
     pen.println(results[0].left + " : " + results[0].right);
     pen.println(results[1].left + " : " + results[1].right);
     pen.println(results[2].left + " : " + results[2].right);
-
+    
+    pen.println("Mean Cooperation Probability: " + pop.calculateCooperationMean());
   }
 
 }
